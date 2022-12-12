@@ -67,7 +67,7 @@ static const struct arg args[] = {
 	{ netspeed_rx,  "[%sB/s ",	       "eth0" },
 	{ netspeed_tx,  "%sB/s] ",	       "eth0" },
 	{ cpu_perc,     "[%s%% ",                NULL },
-        { run_command,  "%s] ",             "sensors | awk '/^Package/ {print $4}' | sed 's/+//' | sed 's/.0//;s/.0//;s/°//'" }, 
+        { run_command,  "%s] ",             "sensors | awk '/^Tctl/ {print $2}' | sed 's/+//' | sed 's/.0//;s/°//'" }, 
 	{ ram_used,     "[%sB ",                 NULL },
 	{ ram_perc,	"%s%%] ",	          NULL },
 //	{ run_command,  "[%s] ",            "amixer sget Master | awk -F\"[][]\" '/%/ { print $2 }i' | head -n1" },		
