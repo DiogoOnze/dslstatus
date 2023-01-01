@@ -9,6 +9,27 @@ static const char unknown_str[] = "n/a";
 /* maximum output string length */
 #define MAXLEN 2048
 
+static const struct arg args[] = {
+	/* function format                 argument */
+	{ cpu_perc,     "[%s%% ",                NULL },
+	{ temp,         "%sC] ",               "/sys/class/thermal/thermal_zone0/temp" },
+
+	{ ram_used,     "[%sB ",                 NULL },
+	{ ram_perc,	"%s%%] ",	          NULL },
+	
+	{ run_command,  "%s",               "if [[ $(amixer sget Capture | awk '/Front Right:/ {print $7}' | tr -d '[]') == 'off' ]]; then echo '[ '; else echo '[ '; fi" },
+	{ run_command,  "%s",               "if [[ $(amixer sget Master | awk '/Mono:/ {print $6}' | tr -d '[]') == 'off' ]]; then echo ; else echo ; fi" },
+	{ vol_perc,     "%s%%] ",              "Master" },
+	
+
+	//Comment this out if on a desktop computer
+	{ wifi_perc,    "[%s%% ",              "wlan0" },
+	{ battery_perc, "%s%%] ",	         "BAT0" },
+	
+
+	{ datetime,     "[%s]",             "%F %H:%M" },
+};
+
 /*
  * function            description                     argument (example)
  *
@@ -62,17 +83,3 @@ static const char unknown_str[] = "n/a";
  * wifi_perc           WiFi signal in percent          interface name (wlan0)
  * wifi_essid          WiFi ESSID                      interface name (wlan0)
  */
-static const struct arg args[] = {
-	/* function format                 argument */
-	{ netspeed_rx,  "[%sB/s ",	       "wlan0" },
-	{ netspeed_tx,  "%sB/s ",	       "wlan0" },
-	{ wifi_perc,    "%s%%] ",             "wlan0" },	
-	{ cpu_perc,     "[%s%% ",                NULL },
-        { run_command,  "%s] ",             "sensors | awk '/^Package/ {print $4}' | sed 's/+//' | sed 's/.0//;s/.0//;s/°//'" }, 
-	{ ram_used,     "[%sB ",                 NULL },
-	{ ram_perc,	"%s%%] ",	          NULL },
-	{ run_command,  "%s",               "if [[ $(amixer sget Master | awk '/Mono:/ {print $6}' | tr -d '[]') == 'off' ]]; then echo [; else echo [; fi" },
-	{ vol_perc,     "%s%% ",             "Master" },		
-	{ battery_perc, "%s%%] ",	        "BAT0" },
-	{ datetime,     "[%s]",            "%F %H:%M" },
-};
