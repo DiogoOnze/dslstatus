@@ -71,7 +71,8 @@ static const struct arg args[] = {
         { run_command,  "%s] ",             "sensors | awk '/^Package/ {print $4}' | sed 's/+//' | sed 's/.0//;s/.0//;s/°//'" }, 
 	{ ram_used,     "[%sB ",                 NULL },
 	{ ram_perc,	"%s%%] ",	          NULL },
-	{ run_command,  "[%s ",            "amixer sget Master | awk -F\"[][]\" '/%/ { print $2 }i' | head -n1" },		
+	{ run_command,  "%s",               "if [[ $(amixer sget Master | awk '/Mono:/ {print $6}' | tr -d '[]') == 'off' ]]; then echo [; else echo [; fi" },
+	{ vol_perc,     "%s%% ",             "Master" },		
 	{ battery_perc, "%s%%] ",	        "BAT0" },
 	{ datetime,     "[%s]",            "%F %H:%M" },
 };
