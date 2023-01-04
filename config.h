@@ -4,7 +4,7 @@
 const unsigned int interval = 1000;
 
 /* text to show if no value can be retrieved */
-static const char unknown_str[] = "n/a";
+static const char unknown_str[] = "E";
 
 /* maximum output string length */
 #define MAXLEN 2048
@@ -19,7 +19,8 @@ static const struct arg args[] = {
 	
 	{ run_command,  "%s",               "if [[ $(amixer sget Capture | awk '/Front Right:/ {print $7}' | tr -d '[]') == 'off' ]]; then echo '[ '; else echo '[ '; fi" },
 	{ run_command,  "%s",               "if [[ $(amixer sget Master | awk '/Mono:/ {print $6}' | tr -d '[]') == 'off' ]]; then echo ; else echo ; fi" },
-	{ vol_perc,     "%s%%] ",              "Master" },
+	{ vol_perc,     "%s%%/",               "Master" },
+	{ run_command,  "%s%]",             "if [[ $(amixer -D default:1) ]] ; then amixer -D default:1 sget Speaker | awk '/Front Right:/ {print $5}' | head -n 1 | tr -d '[%]'; fi" },
 	
 
 	//Comment this out if on a desktop computer
